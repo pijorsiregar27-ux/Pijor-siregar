@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Sejarah Lahirnya Pancasila - Kelas VII</title>
+    <style>
+        :root {
+            --primary-red: #DA251D;
+            --primary-white: #FFFFFF;
+            --dark-gray: #2C3E50;
+            --light-gray: #F8F9FA;
+            --accent-blue: #3498DB;
+            --success-green: #2ECC71;
+            --warning-orange: #E67E22;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #F0F3F4;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--primary-white);
+            min-height: 100vh;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 851px) {
+            .app-container {
+                min-height: 90vh;
+                border-radius: var(--border-radius);
+                margin: 20px;
+            }
+        }
+
+        /* Header & Progress Bar */
+        header {
+            background: var(--primary-red);
+            color: var(--primary-white);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .progress-container {
+            background: #e0e0e0;
+            height: 6px;
+            width: 100%;
+        }
+
+        .progress-bar {
+            background: var(--accent-blue);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Main Content Screen */
+        .screen {
+            display: none;
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(90vh - 110px);
+        }
+
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Typography & Components */
+        h2 {
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--primary-red);
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            margin: 15px 0 8px 0;
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background: var(--primary-red);
+            color: var(--primary-white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            margin: 5px 0;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--accent-blue);
+        }
+
+        .btn-success {
+            background: var(--success-green);
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: var(--light-gray);
+            border-left: 4px solid var(--primary-red);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        /* Navigation Grid (Menu Petunjuk) */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .menu-btn {
+            background: var(--primary-white);
+            border: 2px solid var(--accent-blue);
+            color: var(--dark-gray);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .menu-btn:hover {
+            background: var(--accent-blue);
+            color: var(--primary-white);
+        }
+
+        /* Timeline Styling */
+        .timeline-item {
+            position: relative;
+            padding-left: 25px;
+            border-left: 2px solid var(--primary-red);
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-red);
+        }
+
+        /* Interactive Tabs */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+
+        .tab-btn {
+            background: #e0e0e0;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Feedback Boxes */
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #D4EFDF;
+            color: #196F3D;
+            border: 1px solid #A9DFBF;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #FADBD8;
+            color: #78281F;
+            border: 1px solid #F5B7B1;
+            display: block;
+        }
+
+        /* Footer Navigation */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .center {
+            text-align: center;
+        }
+        
+        .badge {
+            background: var(--warning-orange);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1 id="header-title">Jelajah Sejarah Lahirnya Pancasila</h1>
+        <span id="user-badge" style="font-size: 0.85rem;">Kelas VII</span>
+    </header>
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- HALAMAN 1: BERANDA -->
+    <div class="screen active" id="screen-1">
+        <div class="center" style="margin: auto 0;">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🇮🇩</div>
+            <h2 style="border:none; color: var(--primary-red);">Jelajah Sejarah Lahirnya Pancasila</h2>
+            <p style="margin-bottom: 25px; color: #555;">Media Pembelajaran Interaktif Pendidikan Pancasila Kelas VII SMP</p>
+            
+            <div style="max-width: 400px; margin: 0 auto; text-align: left;">
+                <label>Nama Lengkap Peserta Didik:</label>
+                <input type="text" id="student-name" placeholder="Contoh: Budi Santoso">
+                
+                <label>Kelas:</label>
+                <select id="student-class">
+                    <option value="">Pilih Kelas</option>
+                    <option value="VII A">VII A</option>
+                    <option value="VII B">VII B</option>
+                    <option value="VII C">VII C</option>
+                    <option value="VII D">VII D</option>
+                    <option value="VII E">VII E</option>
+                    <option value="VII F">VII F</option>
+                </select>
+                
+                <button class="btn" style="width: 100%;" onclick="startApp()">Mulai Belajar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN 2: PETUNJUK -->
+    <div class="screen" id="screen-2">
+        <h2>Petunjuk Penggunaan Media</h2>
+        <p>Selamat datang! Pelajari sejarah lahirnya Pancasila dengan langkah-langkah mudah berikut:</p>
+        <ul style="margin-left: 20px; margin-bottom: 15px;">
+            <li>Pilih menu di bawah atau ikuti urutan tombol navigasi.</li>
+            <li>Pelajari materi, pahami tokoh, dan kerjakan latihan soal serta kuis.</li>
+            <li>Di akhir sesi, kirimkan hasil belajarmu ke guru melalui tombol rekap nilai.</li>
+        </ul>
+
+        <div style="margin-bottom: 15px;">
+            <a href="https://docs.google.com/document/d/YOUR_GOOGLE_DOCS_ID/edit" target="_blank" class="btn btn-secondary" style="width: 100%; text-align: center;">📖 Buka Materi Lengkap (Google Docs)</a>
+        </div>
+
+        <h3>Menu Utama Pembelajaran</h3>
+        <div class="menu-grid">
+            <div class="menu-btn" onclick="goToScreen(4)">Materi</div>
+            <div class="menu-btn" onclick="goToScreen(5)">Timeline</div>
+            <div class="menu-btn" onclick="goToScreen(6)">Tokoh</div>
+            <div class="menu-btn" onclick="goToScreen(7)">Aktivitas 1</div>
+            <div class="menu-btn" onclick="goToScreen(8)">Aktivitas 2</div>
+            <div class="menu-btn" onclick="goToScreen(9)">Kuis</div>
+            <div class="menu-btn" onclick="goToScreen(10)">Tantangan HOTS</div>
+            <div class="menu-btn" onclick="goToScreen(11)">Refleksi</div>
+        </div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(1)">Kembali</button>
+            <button class="btn" onclick="goToScreen(3)">Lanjut ke Apersepsi</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 3: APERSEPSI -->
+    <div class="screen" id="screen-3">
+        <h2>Apersepsi: Berpikir Kritis</h2>
+        <div class="card">
+            <p><b>Pertanyaan Pemantik:</b></p>
+            <p>"Menurut kalian, apakah Pancasila langsung terbentuk dalam satu hari?"</p>
+        </div>
+        
+        <p>Pilih jawaban yang paling tepat menurutanalisis awalmu:</p>
+        <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:8px;" onclick="checkApersepsi(false)">A. Ya, Pancasila langsung dicetuskan dalam waktu singkat tanpa perdebatan.</button>
+        <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:8px;" onclick="checkApersepsi(true)">B. Tidak, Pancasila melalui proses sidang, perdebatan gagasan, dan kompromi panjang para pendiri bangsa.</button>
+        <button class="btn btn-secondary" style="width:100%; text-align:left; margin-bottom:8px;" onclick="checkApersepsi(false)">C. Ya, karena langsung disahkan oleh penjajah Jepang.</button>
+
+        <div id="apersepsi-feedback" class="feedback"></div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(2)">Sebelumnya</button>
+            <button class="btn" onclick="goToScreen(4)">Lanjut ke Materi</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 4: MATERI INTERAKTIF -->
+    <div class="screen" id="screen-4">
+        <h2>Materi Interaktif Sejarah Pancasila</h2>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'tab-a')">A. BPUPKI</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-b')">B. Sidang I</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-c')">C. Gagasan Tokoh</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-d')">D. Panitia 9</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-e')">E. PPKI & Proklamasi</button>
+        </div>
+
+        <div id="tab-a" class="tab-content active">
+            <div class="card">
+                <h3>A. Latar Belakang Pembentukan BPUPKI</h3>
+                <p>Menjelang kekalahan Jepang dalam Perang Asia Pasifik, Jepang memberikan janji kemerdekaan (Koiso Declaration) kepada bangsa Indonesia untuk menarik simpati. Dibentuklah Dokuritsu Junbi Cosakai (Badan Penyelidik Usaha-Usaha Persiapan Kemerdekaan Indonesia / BPUPKI) pada 1 Maret 1945 yang diketuai oleh Dr. K.R.T. Radjiman Wedyodiningrat.</p>
+            </div>
+        </div>
+
+        <div id="tab-b" class="tab-content">
+            <div class="card">
+                <h3>B. Sidang Pertama BPUPKI (29 Mei - 1 Juni 1945)</h3>
+                <p>Sidang pertama ini membahas rumusan dasar negara Republik Indonesia. Tiga tokoh utama menyampaikan gagasan asas negara secara lisan maupun tulisan, yaitu Mr. Mohammad Yamin, Prof. Dr. Mr. Soepomo, dan Ir. Soekarno.</p>
+            </div>
+        </div>
+
+        <div id="tab-c" class="tab-content">
+            <div class="card">
+                <h3>C. Gagasan Para Tokoh</h3>
+                <p><b>1. Mr. Mohammad Yamin (29 Mei 1945):</b> Peri Kebangsaan, Peri Kemanusiaan, Peri Ketuhanan, Peri Kerakyatan, Kesejahteraan Rakyat.</p>
+                <p><b>2. Prof. Soepomo (31 Mei 1945):</b> Persatuan, Kekeluargaan, Mufakat dan Demokrasi, Musyawarah, Keadilan Sosial.</p>
+                <p><b>3. Ir. Soekarno (1 Juni 1945):</b> Kebangsaan Indonesia, Internasionalisme atau Perikemanusiaan, Mufakat atau Demokrasi, Kesejahteraan Sosial, Ketuhanan yang Berkebudayaan (yang kemudian dinamakan <b>Pancasila</b>).</p>
+            </div>
+        </div>
+
+        <div id="tab-d" class="tab-content">
+            <div class="card">
+                <h3>D. Panitia Sembilan & Piagam Jakarta</h3>
+                <p>Untuk menengahi perbedaan pendapat dalam sidang, dibentuklah Panitia Kecil (Panitia Sembilan) yang menghasilkan rumusan mukaddimah yang dikenal sebagai <b>Piagam Jakarta (Jakarta Charter)</b> pada 22 Juni 1945.</p>
+            </div>
+        </div>
+
+        <div id="tab-e" class="tab-content">
+            <div class="card">
+                <h3>E. Sidang PPKI & Penetapan Pancasila</h3>
+                <p>Setelah Proklamasi Kemerdekaan 17 Agustus 1945, Panitia Persiapan Kemerdekaan Indonesia (PPKI) mengadakan sidang pada 18 Agustus 1945. PPKI mengesahkan UUD NRI Tahun 1945 yang di dalamnya memuat rumusan resmi Pancasila pada Pembukaan alinea keempat.</p>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(3)">Sebelumnya</button>
+            <button class="btn" onclick="goToScreen(5)">Lanjut ke Timeline</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 5: TIMELINE SEJARAH -->
+    <div class="screen" id="screen-5">
+        <h2>Timeline Peristiwa Sejarah</h2>
+        <p>Klik peristiwa di bawah ini untuk melihat detail ringkasnya:</p>
+        
+        <div class="timeline-item" onclick="showTimelineDetail('Pembentukan BPUPKI (1 Maret 1945)', 'Jepang membentuk BPUPKI untuk merumuskan syarat-syarat kemerdekaan Indonesia.')">
+            <strong>1 Maret 1945</strong>
+            <p>Pembentukan BPUPKI</p>
+        </div>
+        <div class="timeline-item" onclick="showTimelineDetail('Sidang Pertama BPUPKI (29 Mei - 1 Juni 1945)', 'Sidang resmi pertama membahas usulan dasar negara oleh Yamin, Soepomo, dan Soekarno.')">
+            <strong>29 Mei - 1 Juni 1945</strong>
+            <p>Sidang Pertama BPUPKI & Lahirnya Istilah Pancasila</p>
+        </div>
+        <div class="timeline-item" onclick="showTimelineDetail('Piagam Jakarta (22 Juni 1945)', 'Panitia Sembilan merumuskan naskah Piagam Jakarta yang berisi dasar negara.')">
+            <strong>22 Juni 1945</strong>
+            <p>Penetapan Piagam Jakarta oleh Panitia Sembilan</p>
+        </div>
+        <div class="timeline-item" onclick="showTimelineDetail('Proklamasi Kemerdekaan (17 Agustus 1945)', 'Ir. Soekarno dan Drs. Mohammad Hatta memproklamasikan kemerdekaan Indonesia.')">
+            <strong>17 Agustus 1945</strong>
+            <p>Proklamasi Kemerdekaan Indonesia</p>
+        </div>
+        <div class="timeline-item" onclick="showTimelineDetail('Sidang PPKI (18 Agustus 1945)', 'Pengesahan UUD 1945 dan penetapan Pancasila sebagai dasar negara secara sah.')">
+            <strong>18 Agustus 1945</strong>
+            <p>Sidang PPKI & Pengesahan Dasar Negara</p>
+        </div>
+
+        <div class="card" id="timeline-detail-box" style="margin-top: 15px; border-left-color: var(--accent-blue);">
+            <b>Detail Peristiwa:</b>
+            <p id="timeline-detail-text">Klik salah satu tanggal di atas untuk menampilkan penjelasan peristiwa.</p>
+        </div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(4)">Sebelumnya</button>
+            <button class="btn" onclick="goToScreen(6)">Lanjut ke Tokoh</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 6: TOKOH -->
+    <div class="screen" id="screen-6">
+        <h2>Tokoh Perumus Dasar Negara</h2>
+        <p>Kenali para tokoh pahlawan pendiri bangsa:</p>
+
+        <div class="card">
+            <h3>Ir. Soekarno</h3>
+            <p><b>Peran:</b> Ketua PPKI & Pengusul Nama "Pancasila"</p>
+            <p><b>Kontribusi:</b> Menyampaikan gagasan 5 asas dasar negara pada 1 Juni 1945 serta memimpin sidang perumusan.</p>
+        </div>
+
+        <div class="card">
+            <h3>Mr. Mohammad Yamin</h3>
+            <p><b>Peran:</b> Anggota BPUPKI & Panitia Sembilan</p>
+            <p><b>Kontribusi:</b> Mengusulkan rumusan lima asas dasar negara secara lisan dan tulisan pada 29 Mei 1945.</p>
+        </div>
+
+        <div class="card">
+            <h3>Prof. Dr. Mr. Soepomo</h3>
+            <p><b>Peran:</b> Pakar Hukum & Anggota BPUPKI</p>
+            <p><b>Kontribusi:</b> Menyampaikan gagasan teori negara integralistik pada 31 Mei 1945.</p>
+        </div>
+
+        <div class="card">
+            <h3>Drs. Mohammad Hatta</h3>
+            <p><b>Peran:</b> Wakil Ketua BPUPKI / PPKI & Anggota Panitia Sembilan</p>
+            <p><b>Kontribusi:</b> Berperan penting dalam diplomasi perubahan sila pertama demi menjaga persatuan bangsa.</p>
+        </div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(5)">Sebelumnya</button>
+            <button class="btn" onclick="goToScreen(7)">Lanjut ke Aktivitas 1</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 7: AKTIVITAS 1 (SUSUN KRONOLOGI) -->
+    <div class="screen" id="screen-7">
+        <h2>Aktivitas 1: Susun Kronologi Sejarah</h2>
+        <p>Urutkan peristiwa sejarah berikut dari nomor 1 (paling awal) sampai 4 (paling akhir):</p>
+        
+        <div class="card">
+            <p><b>A. Sidang Pertama BPUPKI (Penyampaian Dasar Negara)</b></p>
+            <select id="krono-1">
+                <option value="">Pilih Urutan</option>
+                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+            </select>
+
+            <p><b>B. Sidang PPKI Pengesahan UUD 1945 & Pancasila</b></p>
+            <select id="krono-2">
+                <option value="">Pilih Urutan</option>
+                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+            </select>
+
+            <p><b>C. Perumusan Piagam Jakarta oleh Panitia Sembilan</b></p>
+            <select id="krono-3">
+                <option value="">Pilih Urutan</option>
+                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+            </select>
+
+            <p><b>D. Proklamasi Kemerdekaan Indonesia</b></p>
+            <select id="krono-4">
+                <option value="">Pilih Urutan</option>
+                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+            </select>
+
+            <button class="btn" style="margin-top: 10px;" onclick="checkKronologi()">Periksa Jawaban</button>
+        </div>
+
+        <div id="krono-feedback" class="feedback"></div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(6)">Sebelumnya</button>
+            <button class="btn" onclick="goToScreen(8)">Lanjut ke Aktivitas 2</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 8: AKTIVITAS 2 (SIAPA AKU?) -->
+    <div class="screen" id="screen-8">
+        <h2>Aktivitas 2: Siapa Aku?</h2>
+        <p>Tebak tokoh berdasarkan deskripsi peran berikut:</p>
+
+        <div class="card">
+            <p><b>1. Aku adalah tokoh yang menyampaikan usulan 5 dasar negara pada tanggal 1 Juni 1945 dan mencetuskan nama "Pancasila". Siapakah aku?</b></p>
+            <select id="siapa-1">
+                <option value="">Pilih Tokoh</option>
+                <option value="salah">Mr. Mohammad Yamin</option>
+                <option value="benar">Ir. Soekarno</option>
+                <option value="salah">Soepomo</option>
+            </select>
+
+            <p style="margin-top:15px;"><b>2. Aku adalah tokoh pakar hukum tata negara yang menyampaikan teori negara integralistik pada 31 Mei 1945. Siapakah aku?</b></p>
+            <select id="siapa-2">
+                <option value="">Pilih Tokoh</option>
+                <option value="benar">Soepomo</option>
+                <option value="salah">Drs. Mohammad Hatta</option>
+                <option value="salah">Ir. Soekarno</option>
+            </select>
+            
+            <button class="btn" style="margin-top: 10px;" onclick="checkSiapaAku()">Periksa Aktivitas 2</button>
+        </div>
+
+        <div id="siapa-feedback" class="feedback"></div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(7)">Sebelumnya</button>
+            <button class="btn" onclick="goToScreen(9)">Lanjut ke Kuis</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 9: KUIS PILIHAN GANDA -->
+    <div class="screen" id="screen-9">
+        <h2>Kuis Pemahaman Pancasila</h2>
+        <p>Jawablah 3 soal berikut dengan teliti!</p>
+
+        <div class="card">
+            <p><b>1. (Mudah) Siapakah ketua dari BPUPKI?</b></p>
+            <label><input type="radio" name="q1" value="a"> A. Ir. Soekarno</label><br>
+            <label><input type="radio" name="q1" value="b"> B. Dr. K.R.T. Radjiman Wedyodiningrat</label><br>
+            <label><input type="radio" name="q1" value="c"> C. Mohammad Hatta</label>
+        </div>
+
+        <div class="card">
+            <p><b>2. (Sedang) Tanggal berapa istilah "Pancasila" pertama kali diperkenalkan secara resmi?</b></p>
+            <label><input type="radio" name="q2" value="a"> A. 29 Mei 1945</label><br>
+            <label><input type="radio" name="q2" value="b"> B. 1 Juni 1945</label><br>
+            <label><input type="radio" name="q2" value="c"> C. 18 Agustus 1945</label>
+        </div>
+
+        <div class="card">
+            <p><b>3. (Sulit) Mengapa rumusan sila pertama dalam Piagam Jakarta mengalami perubahan saat disahkan pada Sidang PPKI 18 Agustus 1945?</b></p>
+            <label><input type="radio" name="q3" value="a"> A. Demi menjaga persatuan dan kesatuan bangsa Indonesia dari berbagai wilayah.</label><br>
+            <label><input type="radio" name="q3" value="b"> B. Atas permintaan pemerintah kolonial Jepang.</label><br>
+            <label><input type="radio" name="q3" value="c"> C. Karena usul dari golongan pemuda semata.</label>
+        </div>
+
+        <button class="btn" onclick="gradeKuis()">Nilai Kuis</button>
+        <div id="quiz-feedback" class="feedback"></div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(8)">Sebelumnya</button>
+            <button class="btn" onclick="goToScreen(10)">Lanjut ke Tantangan HOTS</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 10: TANTANGAN HOTS -->
+    <div class="screen" id="screen-10">
+        <h2>Tantangan HOTS (Studi Kasus)</h2>
+        <div class="card">
+            <p><b>Kasus Analitis:</b></p>
+            <p>"Jika para pendiri bangsa pada masa sidang BPUPKI bersikeras mementingkan ego golongan atau daerah masing-masing tanpa mau berkompromi, apa akibatnya terhadap eksistensi negara Indonesia?"</p>
+            
+            <textarea id="hots-answer" rows="4" placeholder="Tuliskan analisis dan pendapatmu di sini..."></textarea>
+            <button class="btn" onclick="saveHots()">Simpan Pendapat</button>
+        </div>
+        <div id="hots-feedback" class="feedback"></div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(9)">Sebelumnya</button>
+            <button class="btn" onclick="goToScreen(11)">Lanjut ke Refleksi</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 11: REFLEKSI -->
+    <div class="screen" id="screen-11">
+        <h2>Refleksi Pembelajaran</h2>
+        <p>Mari renungkan apa yang sudah kamu pelajari hari ini:</p>
+        
+        <div class="card">
+            <label>1. Apa hal baru yang paling berkesan kamu pelajari hari ini?</label>
+            <input type="text" id="ref-1" placeholder="Tuliskan jawabanmu...">
+
+            <label>2. Sikap apa dari para pendiri bangsa yang bisa kamu teladani?</label>
+            <input type="text" id="ref-2" placeholder="Contoh: Mengutamakan musyawarah dan toleransi...">
+            
+            <button class="btn" onclick="saveRefleksi()">Simpan Refleksi</button>
+        </div>
+        <div id="refleksi-feedback" class="feedback"></div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(10)">Sebelumnya</button>
+            <button class="btn btn-success" onclick="finishAndShowResults()">Lihat Hasil Akhir</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN 12: HASIL BELAJAR -->
+    <div class="screen" id="screen-12">
+        <h2>Hasil Belajar Peserta Didik</h2>
+        <div class="card">
+            <p><b>Nama:</b> <span id="res-name">-</span></p>
+            <p><b>Kelas:</b> <span id="res-class">-</span></p>
+            <hr style="margin: 10px 0;">
+            <p>Nilai Kuis: <span id="res-quiz">0</span> / 100</p>
+            <p>Nilai Aktivitas: <span id="res-act">0</span> / 100</p>
+            <p><b>Nilai Akhir Keseluruhan: <span id="res-final">0</span></b></p>
+            <p><b>Predikat: <span id="res-pred">-</span></b></p>
+            <div id="res-msg" style="margin-top: 10px; font-weight: bold; color: var(--primary-red);"></div>
+        </div>
+
+        <button class="btn btn-success" id="btn-submit-db" onclick="sendDataToGoogleSheet()">Kirim Nilai ke Guru (Google Spreadsheet)</button>
+        <div id="submit-status" class="feedback"></div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="goToScreen(11)">Kembali</button>
+            <button class="btn" onclick="location.reload()">Ulangi Pembelajaran</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Konfigurasi URL Google Apps Script Web App (Ganti dengan URL yang didapat setelah Deploy Apps Script)
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz.../exec";
+
+    let studentData = {
+        name: "",
+        className: "",
+        quizScore: 0,
+        actScore: 0,
+        finalScore: 0,
+        predikat: "-"
+    };
+
+    function goToScreen(screenNumber) {
+        if(screenNumber > 1 && !studentData.name && screenNumber !== 2) {
+            // Validasi nama di awal jika mencoba melompati halaman tanpa mengisi
+            alert("Mohon masukkan nama dan kelas terlebih dahulu di Beranda!");
+            goToScreen(1);
+            return;
+        }
+
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('screen-' + screenNumber).classList.add('active');
+        
+        // Update Progress Bar
+        let progress = ((screenNumber - 1) / 11) * 100;
+        document.getElementById('progress-bar').style.width = progress + '%';
+        
+        window.scrollTo(0, 0);
+    }
+
+    function startApp() {
+        let nameInput = document.getElementById('student-name').value.trim();
+        let classInput = document.getElementById('student-class').value;
+
+        if(!nameInput || !classInput) {
+            alert("Harap isi Nama Lengkap dan pilih Kelas terlebih dahulu!");
+            return;
+        }
+
+        studentData.name = nameInput;
+        studentData.className = classInput;
+        document.getElementById('user-badge').innerText = classInput + " - " + nameInput;
+        
+        goToScreen(2);
+    }
+
+    function checkApersepsi(isCorrect) {
+        let fb = document.getElementById('apersepsi-feedback');
+        if(isCorrect) {
+            fb.className = "feedback correct";
+            fb.innerText = "Benar! Pancasila tidak terbentuk dalam satu hari, melainkan melalui proses persidangan, usulan gagasan, kompromi, dan musyawarah yang panjang.";
+        } else {
+            fb.className = "feedback incorrect";
+            fb.innerText = "Kurang tepat. Coba ingat kembali bahwa para pendiri bangsa melalui berbagai perdebatan dan sidang panjang sebelum menyepakati Pancasila.";
+        }
+    }
+
+    function openTab(evt, tabName) {
+        let contents = document.querySelectorAll('.tab-content');
+        contents.forEach(c => c.classList.remove('active'));
+        
+        let buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(b => b.classList.remove('active'));
+
+        document.getElementById(tabName).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    function showTimelineDetail(title, desc) {
+        document.getElementById('timeline-detail-text').innerHTML = `<b>${title}</b><br>${desc}`;
+    }
+
+    function checkKronologi() {
+        let k1 = document.getElementById('krono-1').value;
+        let k2 = document.getElementById('krono-2').value;
+        let k3 = document.getElementById('krono-3').value;
+        let k4 = document.getElementById('krono-4').value;
+
+        let fb = document.getElementById('krono-feedback');
+        if(k1 === "1" && k3 === "2" && k4 === "3" && k2 === "4") {
+            fb.className = "feedback correct";
+            fb.innerText = "Hebat! Urutan kronologi sudah tepat: Sidang BPUPKI -> Piagam Jakarta -> Proklamasi -> Sidang PPKI.";
+            studentData.actScore += 50;
+        } else {
+            fb.className = "feedback incorrect";
+            fb.innerText = "Urutan belum tepat. Ingat: Sidang BPUPKI dan Panitia Sembilan terjadi sebelum Proklamasi, dan Sidang PPKI mengesahkan di akhir.";
+        }
+    }
+
+    function checkSiapaAku() {
+        let s1 = document.getElementById('siapa-1').value;
+        let s2 = document.getElementById('siapa-2').value;
+        let fb = document.getElementById('siapa-feedback');
+
+        if(s1 === "benar" && s2 === "benar") {
+            fb.className = "feedback correct";
+            fb.innerText = "Luar biasa! Semua jawaban tokoh tepat.";
+            studentData.actScore += 50;
+        } else {
+            fb.className = "feedback incorrect";
+            fb.innerText = "Masih ada yang keliru. Perhatikan kembali peran Ir. Soekarno dan Soepomo.";
+        }
+    }
+
+    function gradeKuis() {
+        let q1 = document.querySelector('input[name="q1"]:checked');
+        let q2 = document.querySelector('input[name="q2"]:checked');
+        let q3 = document.querySelector('input[name="q3"]:checked');
+        let fb = document.getElementById('quiz-feedback');
+
+        let score = 0;
+        if(q1 && q1.value === 'b') score += 35;
+        if(q2 && q2.value === 'b') score += 35;
+        if(q3 && q3.value === 'a') score += 30;
+
+        studentData.quizScore = score;
+        fb.className = "feedback correct";
+        fb.innerText = `Kuis selesai! Perolehan skor kuis kamu: ${score} / 100`;
+    }
+
+    function saveHots() {
+        let ans = document.getElementById('hots-answer').value;
+        let fb = document.getElementById('hots-feedback');
+        if(ans.length > 5) {
+            fb.className = "feedback correct";
+            fb.innerText = "Analisis HOTS berhasil disimpan! Sikap berpikir kritis yang bagus.";
+        } else {
+            fb.className = "feedback incorrect";
+            fb.innerText = "Mohon tuliskan analisis yang lebih lengkap.";
+        }
+    }
+
+    function saveRefleksi() {
+        let r1 = document.getElementById('ref-1').value;
+        let fb = document.getElementById('refleksi-feedback');
+        if(r1) {
+            fb.className = "feedback correct";
+            fb.innerText = "Refleksi berhasil disimpan!";
+        } else {
+            fb.className = "feedback incorrect";
+            fb.innerText = "Silakan isi refleksi terlebih dahulu.";
+        }
+    }
+
+    function finishAndShowResults() {
+        // Hitung Nilai Akhir (Gabungan Kuis & Aktivitas)
+        let final = Math.round((studentData.quizScore * 0.6) + (studentData.actScore * 0.4));
+        studentData.finalScore = final;
+
+        let pred = "C (Cukup)";
+        let msg = "Tetap semangat belajar dan terus gali wawasan kebangsaanmu!";
+        if(final >= 85) {
+            pred = "A (Sangat Baik)";
+            msg = "Luar biasa! Pemahaman sejarah kebangsaanmu sangat mendalam!";
+        } else if(final >= 70) {
+            pred = "B (Baik)";
+            msg = "Bagus sekali! Pertahankan prestasi belajarmu.";
+        }
+
+        studentData.predikat = pred;
+
+        document.getElementById('res-name').innerText = studentData.name;
+        document.getElementById('res-class').innerText = studentData.className;
+        document.getElementById('res-quiz').innerText = studentData.quizScore;
+        document.getElementById('res-act').innerText = studentData.actScore;
+        document.getElementById('res-final').innerText = final;
+        document.getElementById('res-pred').innerText = pred;
+        document.getElementById('res-msg').innerText = msg;
+
+        goToScreen(12);
+    }
+
+    function sendDataToGoogleSheet() {
+        let statusBox = document.getElementById('submit-status');
+        statusBox.className = "feedback";
+        statusBox.style.display = "block";
+        statusBox.innerText = "Mengirim data ke Google Spreadsheet...";
+
+        let payload = {
+            timestamp: new Date().toLocaleString(),
+            name: studentData.name,
+            className: studentData.className,
+            quizScore: studentData.quizScore,
+            actScore: studentData.actScore,
+            finalScore: studentData.finalScore,
+            predikat: studentData.predikat
+        };
+
+        // Jika URL Apps Script belum diubah oleh guru
+        if(GOOGLE_SCRIPT_URL.includes("YOUR_")) {
+            statusBox.className = "feedback incorrect";
+            statusBox.innerText = "URL Google Apps Script belum dikonfigurasi oleh guru. Silakan hubungi guru pengampu.";
+            return;
+        }
+
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        }).then(() => {
+            statusBox.className = "feedback correct";
+            statusBox.innerText = "Nilai berhasil terkirim ke guru!";
+        }).catch(err => {
+            statusBox.className = "feedback incorrect";
+            statusBox.innerText = "Gagal terhubung ke internet atau server. Data Anda tetap tersimpan di layar ini.";
+        });
+    }
+</script>
+
+</body>
+</html>
